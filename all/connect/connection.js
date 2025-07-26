@@ -1,1 +1,91 @@
-const _0x1e7d=['connection.update','user','id','split','INFO','Connected\x20to:\x20','@s.whatsapp.net','│\x20ID:\x20','│\x20Prefix:\x20','│\x20Version:\x20v','│\x20Session:\x20Active','╰─────────────────────','','Bot\x20not\x20responding?','•\x20Visit:\x20','•\x20Replace\x20session\x20ID\x20in\x20env','•\x20Restart\x20from\x20host\x20✅','text','sendMessage','plugins/ednut','./plugins/ednut','js','length','push','loadedPlugins','Installing\x20plugins...','Failed\x20to\x20load\x20plugin\x20','Plugins\x20installed.','Plugin\x20setup\x20failed:','WARN','Reconnecting\x20(','/','MAX_RESTART',')...','open','Connected\x20to:\x20','prefix','version','scan','loadedPlugins','close','output','statusCode','Logged\x20out:\x20Invalid\x20session\x20(401).','Max\x20reconnects\x20(','Restarting...','Disconnected\x20(','retrying\x20in\x20','s...','log','off','on'];(function(_0x59dc98,_0x1b1e85){const _0x4fe82d=function(_0x5a75cb){while(--_0x5a75cb){_0x59dc98['push'](_0x59dc98['shift']());}};_0x4fe82d(++_0x1b1e85);}(_0x1e7d,0x11e));const _0x3bb3=function(_0x1c8d7e){return _0x1e7d[_0x1c8d7e-0x0];};let onUpdate,reconnects=0;const fs=require('fs'),pkg=require('../../package.json'),getLatest=require('../getversion');module.exports=function(sock,startBot){onUpdate&&sock.ev[_0x3bb3('0x0')](onUpdate),onUpdate=async update=>{let{connection:conn,lastDisconnect:last}=update;global.db=global.db||{},global.db.reconnect=global.db.reconnect||0,'connecting'===conn&&(log(reconnects==0?_0x3bb3('0x4'):_0x3bb3('0x31'),reconnects==0?'[0] Connecting to WhatsApp...':_0x3bb3('0x20')+reconnects+'/'+process.env[_0x3bb3('0x24')]+_0x3bb3('0x25'))),'open'===conn&&(log(_0x3bb3('0x4'),_0x3bb3('0x5')+sock[_0x3bb3('0x1')][_0x3bb3('0x2')][_0x3bb3('0x3')](':')[0]),0===global.db.reconnect&&(await(async()=>{let latest=await getLatest(),ver=latest?latest!==pkg[_0x3bb3('0x23')]?'│ ⚠️ New version: v'+latest:'│ ✅ Up to date':'│ ⚠️ Version check failed',msg=['╭─[ Arch Md Connected ]',_0x3bb3('0x6')+sock[_0x3bb3('0x1')][_0x3bb3('0x2')][_0x3bb3('0x3')](':')[0],_0x3bb3('0x7')+global[_0x3bb3('0x22')],_0x3bb3('0x8')+pkg[_0x3bb3('0x23')]+'|'+ver,_0x3bb3('0x9'),_0x3bb3('0xa'),_0x3bb3('0xb'),_0x3bb3('0xc')+global[_0x3bb3('0x23')],_0x3bb3('0xd'),_0x3bb3('0xe')][_0x3bb3('0x10')]('\n');await sock[_0x3bb3('0x12')](sock[_0x3bb3('0x1')][_0x3bb3('0x2')][_0x3bb3('0x3')](':')[0]+_0x3bb3('0x5'),{[_0x3bb3('0xf')]:msg})})()),reconnects=0,global.db.reconnect=1,!global.db[_0x3bb3('0x14')]&&(()=>{try{log(_0x3bb3('0x15'),'[0] '+_0x3bb3('0x16'));for(let file of fs.readdirSync(_0x3bb3('0x18')).filter(f=>f.endsWith('.'+_0x3bb3('0x19'))))try{require('../../'+_0x3bb3('0x17')+'/'+file);}catch(e){log('ERROR','[x] '+_0x3bb3('0x1a')+file+': '+e.message);}global.db[_0x3bb3('0x14')]=!0,log(_0x3bb3('0x15'),'[0] '+_0x3bb3('0x1b'))}catch(e){log('ERROR','[x] '+_0x3bb3('0x1c')+e.message)}})()),'close'===conn&&(reconnects++,401===(last?.error?.[_0x3bb3('0x1f')]?.[_0x3bb3('0x21')]||'unknown')?(log('ERROR','[x] '+_0x3bb3('0x26')),process.exit(1)):(Number(process.env[_0x3bb3('0x24')]||3)<=reconnects&&(log('ERROR','[x] '+_0x3bb3('0x27')+process.env[_0x3bb3('0x24')]+') '+_0x3bb3('0x28')),reconnects=0,global.db.reconnect=0,process.exit(1)),setTimeout(()=>startBot(),Math.min(4e3,1e3*reconnects)),log(_0x3bb3('0x31'),'[!] '+_0x3bb3('0x29')+(last?.error?.[_0x3bb3('0x1f')]?.[_0x3bb3('0x21')]||'unknown')+'), '+_0x3bb3('0x2a')+Math.min(4e3,1e3*reconnects)/1e3+_0x3bb3('0x2b') )));},sock.ev[_0x3bb3('0x2d')](_0x3bb3('0x0'),onUpdate)};
+const fs = require("fs");
+const pkg = require("../../package.json");
+const getLatestGitHubVersion = require("../getversion");
+
+let onConnectionUpdate;
+
+module.exports = function handleConnectionUpdate(ednut, startBotz) {
+  if (onConnectionUpdate) ednut.ev.off("connection.update", onConnectionUpdate);
+
+  onConnectionUpdate = async (update) => {
+    const { connection, lastDisconnect } = update;
+
+    global.db = global.db || {};
+    global.db.reconnect = global.db.reconnect || 0; // for controlling connection message only
+
+    // 🟡 Connecting
+    if (connection === "connecting") {
+      log("INFO", "[*] Connecting to WhatsApp...");
+      log("INFO", `[0] Arch Version: v${pkg.version}`);
+    }
+
+    // ✅ Connected
+    if (connection === "open") {
+      const userId = ednut.user.id.split(":")[0];
+      log("INFO", `[0] Connected to: ${userId}`);
+
+      if (global.db.reconnect === 0) {
+        const latest = await getLatestGitHubVersion();
+        const versionNote = latest
+          ? latest !== pkg.version
+            ? `│ ⚠️ New version: v${latest}`
+            : `│ ✅ Up to date`
+          : `│ ⚠️ Version check failed`;
+
+        const msg = [
+          "╭─[ Arch Md Connected ]",
+          `│ ID: ${userId}`,
+          `│ Prefix: ${global.prefix}`,
+          `│ Version: v${pkg.version}|${versionNote}`,
+          "│ Session: Active",
+          "╰─────────────────────",
+          "",
+          "Bot not responding?",
+          `• Visit: ${global.scan}`,
+          "• Replace session ID in env",
+          "• Restart from host ✅"
+        ].join("\n");
+
+        await ednut.sendMessage(userId + "@s.whatsapp.net", { text: msg });
+      }
+
+      // 🧹 Prevent message re-send on reconnect
+      global.db.reconnect = 1;
+
+      // 🔌 Load plugins
+      if (!global.db.loadedPlugins) {
+        try {
+          log("INFO", "[0] Installing plugins...");
+          const files = fs.readdirSync('./plugins/ednut').filter(f => f.endsWith('.js'));
+          for (const file of files) {
+            try {
+              require(`../../plugins/ednut/${file}`);
+            } catch (err) {
+              log("ERROR", `[x] Failed to load plugin ${file}: ${err.message}`);
+            }
+          }
+          global.db.loadedPlugins = true;
+          log("INFO", "[0] Plugins installed.");
+        } catch (err) {
+          log("ERROR", `[x] Plugin setup failed: ${err.message}`);
+        }
+      }
+    }
+
+    // ❌ Disconnected
+    if (connection === "close") {
+      const code = lastDisconnect?.error?.output?.statusCode || "unknown";
+
+      if (code === 401) {
+        log("ERROR", "[x] Logged out: Invalid session (401). Exiting...");
+        return process.exit(1);
+      }
+
+      const wait = Math.min(4000, 1000); // short wait before retry
+      log("WARN", `[!] Disconnected (${code}), retrying in ${wait / 1000}s...`);
+      setTimeout(() => startBotz(), wait);
+    }
+  };
+
+  ednut.ev.on("connection.update", onConnectionUpdate);
+};
