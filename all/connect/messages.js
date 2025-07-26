@@ -1,111 +1,60 @@
-(function () {
-  const _0x3c0d = [
-    "catch",
-    "readMessages",
-    "message",
-    "key",
-    "id",
-    "delete",
-    "remoteJid",
-    "fromMe",
-    "smsg",
-    "../myfunc",
-    "messages.upsert",
-    "composing",
-    "autorecording",
-    "recording",
-    "available",
-    "sendPresenceUpdate",
-    "STATUS",
-    "settings",
-    "readsw",
-    "push",
-    "unavailable",
-    "ev",
-    "removeAllListeners",
-    "add",
-    "length",
-    "store",
-    "user",
-    "handler",
-    "require",
-    "stack",
-    "log",
-    "true",
-    "message",
-    "global",
-    "status@broadcast"
-  ];
+const { smsg } = require("../myfunc");
+const { proto } = require("@whiskeysockets/baileys");
 
-  const _0x4874 = function (_0x41e0f1) {
-    return _0x3c0d[_0x41e0f1];
-  };
+const handledMessages = new Set();
 
-  const handledMessages = new Set();
-  const { [_0x4874(8)]: smsg } = require(_0x4874(9));
+module.exports = function handleMessages(ednut, store) {
+  ednut.ev.removeAllListeners("messages.upsert");
 
-  module.exports = function (ednut, store) {
-    ednut[_0x4874(22)][_0x4874(23)](_0x4874(10));
-    ednut[_0x4874(22)].on(_0x4874(10), async (chatUpdate) => {
-      try {
-        const mek = chatUpdate["messages"]?.[0];
-        if (!mek?.[_0x4874(2)]) return;
+  ednut.ev.on("messages.upsert", async (chatUpdate) => {
+    try {
+      const mek = chatUpdate.messages?.[0];
+      if (!mek?.message) return;
 
-        const msgId = mek[_0x4874(3)]?.[_0x4874(4)];
-        if (handledMessages.has(msgId)) return;
-        handledMessages[_0x4874(24)](msgId);
-        setTimeout(() => handledMessages[_0x4874(5)](msgId), 15000);
+      const msgId = mek.key?.id;
+      if (handledMessages.has(msgId)) return;
+      handledMessages.add(msgId);
+      setTimeout(() => handledMessages.delete(msgId), 15000);
 
-        mek[_0x4874(2)] =
-          mek[_0x4874(2)]?.ephemeralMessage?.[_0x4874(2)] || mek[_0x4874(2)];
+      mek.message = mek.message?.ephemeralMessage?.message || mek.message;
+      const jid = mek.key.remoteJid;
+      const fromBot = mek.key.fromMe;
 
-        const jid = mek[_0x4874(3)][_0x4874(6)];
-        const fromBot = mek[_0x4874(3)][_0x4874(7)];
-        const m = smsg(ednut, mek, store);
+      // ✅ Construct main message object
+      const m = smsg(ednut, mek, store);
 
-        if (jid === _0x4874(39)) {
-          const statusEnabled =
-            process.env[_0x4874(16)] === _0x4874(33) ||
-            global.db?.[_0x4874(17)]?.[_0x4874(18)] === true;
-          if (statusEnabled) {
-            await ednut[_0x4874(1)]([mek[_0x4874(3)]])[_0x4874(0)](() => {});
-          }
-          return;
+      // ✅ Auto View Status
+      if (jid === "status@broadcast") {
+        const statusEnabled = process.env.STATUS === "true" || global.db.settings?.readsw === true;
+        if (statusEnabled) {
+          await ednut.readMessages([mek.key]).catch(() => {});
         }
-
-        if (
-          process.env["READ"] === _0x4874(33) ||
-          global.db?.[_0x4874(17)]?.autoread === true
-        ) {
-          ednut[_0x4874(1)]([mek[_0x4874(3)]])[_0x4874(0)](() => {});
-        }
-
-        require("../../handler")(
-          ednut,
-          m,
-          chatUpdate,
-          mek,
-          store
-        );
-
-        if (!fromBot) {
-          if (global.db?.[_0x4874(17)]?.autotyping === true) {
-            ednut[_0x4874(15)](_0x4874(11), jid)[_0x4874(0)](() => {});
-          }
-          if (global.db?.[_0x4874(17)]?.[_0x4874(12)] === true) {
-            ednut[_0x4874(15)](_0x4874(13), jid)[_0x4874(0)](() => {});
-          }
-          const online =
-            process.env["ONLINE"] === _0x4874(33) ||
-            global.db?.[_0x4874(17)]?.[_0x4874(14)] === true;
-          ednut[_0x4874(15)](online ? _0x4874(19) : _0x4874(21), jid)[
-            _0x4874(0)
-          ](() => {});
-        }
-      } catch (err) {
-        if (!ednut?.[_0x4874(26)]?.id) return;
-        log("ERROR", "Message Handler: " + (err[_0x4874(28)] || err.message));
+        return;
       }
-    });
-  };
-})();
+
+      // ✅ Auto Read
+      if (process.env.READ === "true" || global.db.settings?.autoread === true) {
+        ednut.readMessages([mek.key]).catch(() => {});
+      }
+
+      // ✅ Command Handler
+      require("../../handler")(ednut, m, chatUpdate, mek, store);
+
+      // ✅ Presence updates
+      if (!fromBot) {
+        if (global.db.settings?.autotyping === true) {
+          ednut.sendPresenceUpdate("composing", jid).catch(() => {});
+        }
+        if (global.db.settings?.autorecording === true) {
+          ednut.sendPresenceUpdate("recording", jid).catch(() => {});
+        }
+        const online = process.env.ONLINE === "true" || global.db.settings?.available === true;
+        ednut.sendPresenceUpdate(online ? "available" : "unavailable", jid).catch(() => {});
+      }
+
+    } catch (err) {
+      if (!ednut.user?.id) return;
+      log("ERROR", `Message Handler: ${err.stack || err.message}`);
+    }
+  });
+};
