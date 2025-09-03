@@ -31,7 +31,7 @@
 
 | Role       | GitHub Profile                         |
 |------------|----------------------------------------|
-| Developer  | [@Ednut001](https://github.com/Ednut001) |
+| Developer  | [@Ednut001](https://github.com/GoodnessObilom) |
 | Supporter  | [@Taira](https://github.com/anonphoenix007) |
 | Community  | [@Arch-MD Users](https://github.com/Ednut001/Arch-Md/stargazers) |
 
