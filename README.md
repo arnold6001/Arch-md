@@ -31,8 +31,8 @@
 
 | Role       | GitHub Profile                         |
 |------------|----------------------------------------|
-| Developer  | [@Ednut001](https://github.com/GoodnessObilom) |
-| Supporter  | [@Taira](https://github.com/abrotech001) |
+| Developer  | [@GoodnessObilom](https://github.com/GoodnessObilom) |
+| Supporter  | [@AbroCodes](https://github.com/abrotech001) |
 | Community  | [@Arch-MD Users](https://github.com/Ednut001/Arch-Md/stargazers) |
 
 ---
