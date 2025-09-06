@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/GoodnessObilom">
-    <img src="https://readme-typing-svg.demolab.com?font=monospace&size=17&duration=4000&color=F7B11B&center=true&vCenter=true&width=460&lines=ARCH-MD+by+Ednut+%F0%9F%94%A5;2024+Top+WhatsApp+Bot+Repository+%E2%9C%94%EF%B8%8F" alt="Typing SVG" />
+    <img src="https://readme-typing-svg.demolab.com?font=monospace&size=17&duration=4000&color=F7B11B&center=true&vCenter=true&width=460&lines=ARCH-MD+by+Goodness+Tech+%F0%9F%94%A5;2024+Top+WhatsApp+Bot+Repository+%E2%9C%94%EF%B8%8F" alt="Typing SVG" />
   </a>
 </p>
 
