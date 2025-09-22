@@ -1,15 +1,11 @@
 <p align="center">
-  <img src="https://files.catbox.moe/cd1i9a.jpg" alt="ARCH-MD Logo" width="150" />
+  <img src="https://files.catbox.moe/7kkzcr.jpg" alt="ARCH-MD Preview" width="100%" />
 </p>
 
 <p align="center">
   <a href="https://github.com/GoodnessObilom">
     <img src="https://readme-typing-svg.demolab.com?font=monospace&size=17&duration=4000&color=F7B11B&center=true&vCenter=true&width=460&lines=ARCH-MD+by+Goodness+Tech+%F0%9F%94%A5;2024+Top+WhatsApp+Bot+Repository+%E2%9C%94%EF%B8%8F" alt="Typing SVG" />
   </a>
-</p>
-
-<p align="center">
-  <img src="https://files.catbox.moe/7kkzcr.jpg" alt="ARCH-MD Preview" width="100%" />
 </p>
 
 ---
@@ -33,21 +29,20 @@
 |------------|----------------------------------------|
 | Developer  | [@GoodnessObilom](https://github.com/GoodnessObilom) |
 | Supporter  | [@AbroCodes](https://github.com/abrotech001) |
-| Community  | [@Arch-MD Users](https://github.com/Ednut001/Arch-Md/stargazers) |
+| Community  | [@Arch-MD Users](https://github.com/GoodnessObilom/Arch-Md/stargazers) |
 
 ---
 
 ## ❤️ Support
 
-[![PayPal](https://img.shields.io/badge/Donate-PayPal-00457C?style=flat&logo=paypal&logoColor=white)](https://paypal.me/cagestyle)  
-[![YouTube](https://img.shields.io/badge/YouTube-Ednuthimself-FF0000?style=flat&logo=youtube&logoColor=white)](https://www.youtube.com/@Ednuthimself)
+[![Telegram-Group](https://t.me/archmdUpdates)  
 
 ---
 
 ## 📢 Official WhatsApp Channel
 
 📣 **Follow the ARCH-MD Support Channel:**  
-👉 [https://whatsapp.com/channel/0029VbAQfFGBVJl6W26JXy2n](https://whatsapp.com/channel/0029VbAQfFGBVJl6W26JXy2n)
+👉 [https://whatsapp.com/channel/0029VbBhXEF3GJP0p1fcuo1v](https://whatsapp.com/channel/0029VbBhXEF3GJP0p1fcuo1v)
 
 ---
 
