@@ -1,14 +1,14 @@
 {
     "bot-name": "Arch-Md",
-    "description": "A Multi Functional WhatsApp Bot Made By @Ednut",
+    "description": "A Multi Functional WhatsApp Bot Made By @GoodnessObilom",
     "logo": "https://files.catbox.moe/ab9nv3.jpeg",
     "keywords": ["bot"],
-    "documentation-link": "https://arch.ednut.xyz/",
-    "owner-verification": "plsworm6@gmail.com",
+    "documentation-link": "ch-md-site.vercel.app",
+    "owner-verification": "goodnessobilom@gmail.com",
   
     "env": {
       "SESSION_ID": {
-        "description": "Put your SESSION_ID here. It starts with either Ednut~, Arch_, Arch~",
+        "description": "Put your SESSION_ID here. It starts with either Arch_, Arch~",
         "value":"",
         "required": true
         

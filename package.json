@@ -6,14 +6,15 @@
   "scripts": {
     "start": "node main.js"
   },
-  "author": "Ednut",
+  "author": "GoodnessTech",
   "engines": {
     "node": "20.x"
   },
   "dependencies": {
+    "ab-downloader": "latest",
     "@adiwajshing/keyed-db": "^0.2.4",
     "@colors/colors": "1.6.0",
-    "baileys": "npm:@yupra/baileys@^1.1.1",
+    "@whiskeysockets/baileys": "npm:@rexxhayanasi/elaina-bail@1.2.9",
     "api-dylux": "^1.8.5",
     "axios": "^1.10.0",
     "awesome-phonenumber": "^5.10.0",
@@ -40,8 +41,10 @@
     "pg": "^8.16.3",
     "pino": "^8.1.0",
     "translate-google-api": "^1.0.4",
+    "@vreden/youtube_scraper": "latest",
     "wa-sticker-formatter": "^4.4.4",
     "yargs": "^17.7.2",
+    
     "youtube-yts": "^2.0.0"
   },
   "devDependencies": {

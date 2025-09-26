@@ -35,7 +35,7 @@
 
 ## ❤️ Support
 
-[![Telegram-Group](https://t.me/archmdUpdates)  
+![Telegram-Group](https://t.me/archmdUpdates)  
 
 ---
 

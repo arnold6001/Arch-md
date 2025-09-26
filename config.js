@@ -1,7 +1,7 @@
 /*
  * Base By ɢᴏᴏᴅɴᴇꜱꜱ ᴛᴇᴄʜ 
  * Created On 11/10/2024
- * Contact Me on wa.me/2348065623101
+ * Contact Me on wa.me/2349126793637
 */
 
 const chalk = require("chalk");
@@ -10,7 +10,7 @@ require("dotenv").config();
 
 //==================[ BOT SETTINGS ]==================\\
 global.prefix      = (process.env.PREFIX || ".").trim().split(/\s+/); // Supports multiple or single prefix
-global.owner       = process.env.OWNER_NUMBER || "2348065623101";     // Owner number (for multiple, use comma-separated in your logic)
+global.owner       = process.env.OWNER_NUMBER || "2349126793637";     // Owner number (for multiple, use comma-separated in your logic)
 global.sudo        = process.env.SUDO || "";                          // Sudo users (string or logic processed array)
 global.ownername   = process.env.OWNER_NAME || "Goodness Tech";              // Owner name
 global.botname     = process.env.BOT_NAME || "null";                 // Bot name
