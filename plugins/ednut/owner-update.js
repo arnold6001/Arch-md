@@ -1,171 +1,81 @@
-const _0x5f31db = _0x36b2;
-(function (_0x222605, _0x18bfbb) {
-    const _0x5370c6 = _0x36b2;
-    const _0x15b450 = _0x222605();
-    while (!![]) {
-        try {
-            const _0xbbc908 = parseInt(_0x5370c6(0xa5)) / 0x1 + -parseInt(_0x5370c6(0xa8)) / 0x2 * (parseInt(_0x5370c6(0xa7)) / 0x3) + -parseInt(_0x5370c6(0xb0)) / 0x4 + parseInt(_0x5370c6(0xc4)) / 0x5 * (parseInt(_0x5370c6(0xc7)) / 0x6) + -parseInt(_0x5370c6(0xb5)) / 0x7 * (-parseInt(_0x5370c6(0x9f)) / 0x8) + parseInt(_0x5370c6(0x9e)) / 0x9 + -parseInt(_0x5370c6(0xc6)) / 0xa;
-            if (_0xbbc908 === _0x18bfbb) {
-                break;
-            } else {
-                _0x15b450['push'](_0x15b450['shift']());
-            }
-        } catch (_0xa4ed79) {
-            _0x15b450['push'](_0x15b450['shift']());
+const fetch = require("node-fetch");
+
+module.exports = [
+  {
+    command: ["update"],
+    description: "🔄 Update the bot from GitHub",
+    category: "Other",
+    owner: true,
+    async execute(m) {
+      const GIT_REPO = "GoodnessObilom/Arch-md";
+      const HEROKU_API_KEY = process.env.HEROKU_API_KEY;
+      const HEROKU_APP_NAME = process.env.HEROKU_APP_NAME;
+
+      try {
+        await m.reply("📦 Checking GitHub for updates...");
+
+        const gh = await fetch(`https://api.github.com/repos/${GIT_REPO}/commits/main`);
+        if (!gh.ok) throw new Error("GitHub API failed");
+        const latestSHA = (await gh.json()).sha;
+
+        if (HEROKU_API_KEY && HEROKU_APP_NAME) {
+          const hres = await fetch(`https://api.heroku.com/apps/${HEROKU_APP_NAME}/releases`, {
+            headers: {
+              Accept: "application/vnd.heroku+json; version=3",
+              Authorization: `Bearer ${HEROKU_API_KEY}`,
+            },
+          });
+
+          const releases = await hres.json();
+          const latestRelease = releases.reverse().find(r => r.source_blob);
+          const deployedSHA = latestRelease?.source_blob?.version || "";
+
+          if (deployedSHA.includes(latestSHA)) {
+            return m.reply("✅ Heroku bot is already up to date with GitHub.");
+          }
+
+          await m.reply("🚀 New update found!\nTriggering Heroku rebuild...");
+
+          const build = await fetch(`https://api.heroku.com/apps/${HEROKU_APP_NAME}/builds`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/vnd.heroku+json; version=3",
+              Authorization: `Bearer ${HEROKU_API_KEY}`,
+            },
+            body: JSON.stringify({
+              source_blob: {
+                url: `https://github.com/${GIT_REPO}.tar.gz`,
+              },
+            }),
+          });
+
+          if (!build.ok) {
+            const errTxt = await build.text();
+            throw new Error(`Heroku Build Error:\n${errTxt}`);
+          }
+
+          return await m.reply("✅ Update started. Wait 1–2 minutes for Heroku to rebuild.");
         }
-    }
-}(_0x4bae, 0xb6cdf));
-const fetch = require(_0x5f31db(0xab));
-module['\x65\x78\x70\x6f\x72\x74\x73'] = [{
-        '\x63\x6f\x6d\x6d\x61\x6e\x64': ['\x75\x70\x64\x61\x74\x65'],
-        '\x64\x65\x73\x63\x72\x69\x70\x74\x69\x6f\x6e': '\ud83d\udd04\x20\x55\x70\x64\x61\x74\x65\x20\x74\x68\x65\x20\x62\x6f\x74\x20\x66\x72\x6f\x6d\x20\x47\x69\x74\x48\x75\x62',
-        '\x63\x61\x74\x65\x67\x6f\x72\x79': '\x4f\x74\x68\x65\x72',
-        '\x6f\x77\x6e\x65\x72': !![],
-        async '\x65\x78\x65\x63\x75\x74\x65'(_0x3b6da1) {
-            const _0x1a946c = _0x5f31db;
-            const _0x4d222c = _0x1a946c(0xac);
-            const _0x48e90a = process[_0x1a946c(0xaa)][_0x1a946c(0xa1)];
-            const _0x54cde9 = process[_0x1a946c(0xaa)][_0x1a946c(0xb2)];
-            try {
-                await _0x3b6da1[_0x1a946c(0xc0)](_0x1a946c(0xba));
-                const _0x4f31a0 = await fetch(_0x1a946c(0xbb) + _0x4d222c + '\x2f\x63\x6f\x6d\x6d\x69\x74\x73\x2f\x6d\x61\x69\x6e');
-                if (!_0x4f31a0['\x6f\x6b'])
-                    throw new Error('\x47\x69\x74\x48\x75\x62\x20\x41\x50\x49\x20\x66\x61\x69\x6c\x65\x64');
-                const _0x306c17 = (await _0x4f31a0[_0x1a946c(0xaf)]())[_0x1a946c(0xa2)];
-                if (_0x48e90a && _0x54cde9) {
-                    const _0x4b4ebc = {};
-                    _0x4b4ebc[_0x1a946c(0xbd)] = _0x1a946c(0xae);
-                    _0x4b4ebc[_0x1a946c(0xbe)] = _0x1a946c(0xb6) + _0x48e90a;
-                    const _0x4a4f56 = {};
-                    _0x4a4f56[_0x1a946c(0xa0)] = _0x4b4ebc;
-                    const _0x2d3654 = await fetch('\x68\x74\x74\x70\x73\x3a\x2f\x2f\x61\x70\x69\x2e\x68\x65\x72\x6f\x6b\x75\x2e\x63\x6f\x6d\x2f\x61\x70\x70\x73\x2f' + _0x54cde9 + '\x2f\x72\x65\x6c\x65\x61\x73\x65\x73', _0x4a4f56);
-                    const _0x48f1e4 = await _0x2d3654[_0x1a946c(0xaf)]();
-                    const _0x5fa5b9 = _0x48f1e4[_0x1a946c(0xb1)]()['\x66\x69\x6e\x64'](_0x559a23 => _0x559a23[_0x1a946c(0x9c)]);
-                    const _0x20dcfc = _0x5fa5b9?.[_0x1a946c(0x9c)]?.['\x76\x65\x72\x73\x69\x6f\x6e'] || '';
-                    if (_0x20dcfc[_0x1a946c(0xbc)](_0x306c17)) {
-                        return _0x3b6da1['\x72\x65\x70\x6c\x79'](_0x1a946c(0xb4));
-                    }
-                    await _0x3b6da1[_0x1a946c(0xc0)](_0x1a946c(0xa9));
-                    const _0x45947a = {};
-                    _0x45947a[_0x1a946c(0xa6)] = _0x1a946c(0x9d);
-                    _0x45947a[_0x1a946c(0xbd)] = '\x61\x70\x70\x6c\x69\x63\x61\x74\x69\x6f\x6e\x2f\x76\x6e\x64\x2e\x68\x65\x72\x6f\x6b\x75\x2b\x6a\x73\x6f\x6e\x3b\x20\x76\x65\x72\x73\x69\x6f\x6e\x3d\x33';
-                    _0x45947a['\x41\x75\x74\x68\x6f\x72\x69\x7a\x61\x74\x69\x6f\x6e'] = _0x1a946c(0xb6) + _0x48e90a;
-                    const _0xb0c442 = {};
-                    _0xb0c442['\x75\x72\x6c'] = _0x1a946c(0xc5) + _0x4d222c + '\x2e\x74\x61\x72\x2e\x67\x7a';
-                    const _0x829b1c = {};
-                    _0x829b1c['\x73\x6f\x75\x72\x63\x65\x5f\x62\x6c\x6f\x62'] = _0xb0c442;
-                    const _0x3c6327 = await fetch('\x68\x74\x74\x70\x73\x3a\x2f\x2f\x61\x70\x69\x2e\x68\x65\x72\x6f\x6b\x75\x2e\x63\x6f\x6d\x2f\x61\x70\x70\x73\x2f' + _0x54cde9 + _0x1a946c(0xad), {
-                        '\x6d\x65\x74\x68\x6f\x64': '\x50\x4f\x53\x54',
-                        '\x68\x65\x61\x64\x65\x72\x73': _0x45947a,
-                        '\x62\x6f\x64\x79': JSON['\x73\x74\x72\x69\x6e\x67\x69\x66\x79'](_0x829b1c)
-                    });
-                    if (!_0x3c6327['\x6f\x6b']) {
-                        const _0xddb24d = await _0x3c6327[_0x1a946c(0xc2)]();
-                        throw new Error(_0x1a946c(0xb8) + _0xddb24d);
-                    }
-                    return await _0x3b6da1[_0x1a946c(0xc0)](_0x1a946c(0xc8));
-                }
-                const {execSync: _0x494f94} = require(_0x1a946c(0xc3));
-                const _0x4c6861 = _0x494f94(_0x1a946c(0xa4))['\x74\x6f\x53\x74\x72\x69\x6e\x67']()[_0x1a946c(0xb9)]();
-                const _0x474dee = _0x306c17;
-                if (_0x4c6861 === _0x474dee) {
-                    return _0x3b6da1['\x72\x65\x70\x6c\x79'](_0x1a946c(0xc1));
-                }
-                _0x494f94(_0x1a946c(0xa3));
-                await _0x3b6da1['\x72\x65\x70\x6c\x79']('\u2705\x20\x55\x70\x64\x61\x74\x65\x20\x70\x75\x6c\x6c\x65\x64\x20\x66\x72\x6f\x6d\x20\x47\x69\x74\x48\x75\x62\x2e\x0a\u267b\ufe0f\x20\x52\x65\x73\x74\x61\x72\x74\x69\x6e\x67\x20\x62\x6f\x74\x2e\x2e\x2e');
-                process[_0x1a946c(0xb7)](0x1);
-            } catch (_0x49fbc6) {
-                global[_0x1a946c(0xb3)](_0x1a946c(0xbf), '\x55\x70\x64\x61\x74\x65\x20\x66\x61\x69\x6c\x65\x64\x3a\x20' + (_0x49fbc6[_0x1a946c(0xc9)] || _0x49fbc6));
-                _0x3b6da1[_0x1a946c(0xc0)]('\u274c\x20\x55\x70\x64\x61\x74\x65\x20\x66\x61\x69\x6c\x65\x64\x2e\x0a\x43\x68\x65\x63\x6b\x20\x47\x69\x74\x48\x75\x62\x2f\x48\x65\x72\x6f\x6b\x75\x20\x6c\x6f\x67\x73\x20\x6f\x72\x20\x75\x70\x64\x61\x74\x65\x20\x6d\x61\x6e\x75\x61\x6c\x6c\x79\x2e');
-            }
+
+        // Panel / VPS / Local
+        const { execSync } = require("child_process");
+
+        const localCommit = execSync("git rev-parse HEAD").toString().trim();
+        const remoteCommit = latestSHA;
+
+        if (localCommit === remoteCommit) {
+          return m.reply("✅ Bot is already up to date.");
         }
-    }];
-function _0x36b2(_0x345a60, _0x25f785) {
-    const _0x4bae76 = _0x4bae();
-    _0x36b2 = function (_0x36b23b, _0x3d66f3) {
-        _0x36b23b = _0x36b23b - 0x9c;
-        let _0x45718d = _0x4bae76[_0x36b23b];
-        if (_0x36b2['\x66\x53\x49\x6e\x4d\x67'] === undefined) {
-            var _0x44415b = function (_0x365bc2) {
-                const _0x5eab54 = '\x61\x62\x63\x64\x65\x66\x67\x68\x69\x6a\x6b\x6c\x6d\x6e\x6f\x70\x71\x72\x73\x74\x75\x76\x77\x78\x79\x7a\x41\x42\x43\x44\x45\x46\x47\x48\x49\x4a\x4b\x4c\x4d\x4e\x4f\x50\x51\x52\x53\x54\x55\x56\x57\x58\x59\x5a\x30\x31\x32\x33\x34\x35\x36\x37\x38\x39\x2b\x2f\x3d';
-                let _0x5172b1 = '';
-                let _0x430c9a = '';
-                for (let _0x25a9a1 = 0x0, _0x3b6da1, _0x4d222c, _0x48e90a = 0x0; _0x4d222c = _0x365bc2['\x63\x68\x61\x72\x41\x74'](_0x48e90a++); ~_0x4d222c && (_0x3b6da1 = _0x25a9a1 % 0x4 ? _0x3b6da1 * 0x40 + _0x4d222c : _0x4d222c, _0x25a9a1++ % 0x4) ? _0x5172b1 += String['\x66\x72\x6f\x6d\x43\x68\x61\x72\x43\x6f\x64\x65'](0xff & _0x3b6da1 >> (-0x2 * _0x25a9a1 & 0x6)) : 0x0) {
-                    _0x4d222c = _0x5eab54['\x69\x6e\x64\x65\x78\x4f\x66'](_0x4d222c);
-                }
-                for (let _0x54cde9 = 0x0, _0x4f31a0 = _0x5172b1['\x6c\x65\x6e\x67\x74\x68']; _0x54cde9 < _0x4f31a0; _0x54cde9++) {
-                    _0x430c9a += '\x25' + ('\x30\x30' + _0x5172b1['\x63\x68\x61\x72\x43\x6f\x64\x65\x41\x74'](_0x54cde9)['\x74\x6f\x53\x74\x72\x69\x6e\x67'](0x10))['\x73\x6c\x69\x63\x65'](-0x2);
-                }
-                return decodeURIComponent(_0x430c9a);
-            };
-            _0x36b2['\x78\x46\x64\x4e\x44\x53'] = _0x44415b;
-            _0x345a60 = arguments;
-            _0x36b2['\x66\x53\x49\x6e\x4d\x67'] = !![];
-        }
-        const _0x153506 = _0x4bae76[0x0];
-        const _0x540205 = _0x36b23b + _0x153506;
-        const _0x1f4f17 = _0x345a60[_0x540205];
-        if (!_0x1f4f17) {
-            _0x45718d = _0x36b2['\x78\x46\x64\x4e\x44\x53'](_0x45718d);
-            _0x345a60[_0x540205] = _0x45718d;
-        } else {
-            _0x45718d = _0x1f4f17;
-        }
-        return _0x45718d;
-    };
-    return _0x36b2(_0x345a60, _0x25f785);
-}
-function _0x4bae() {
-    const _0x16b23b = [
-        '\x44\x68\x6a\x50\x42\x71',
-        '\x38\x6a\x2b\x74\x50\x49\x62\x64\x41\x67\x76\x4a\x41\x32\x4c\x55\x7a\x59\x62\x68\x41\x78\x72\x69\x44\x77\x69\x47\x7a\x4d\x39\x59\x69\x68\x76\x57\x7a\x67\x66\x30\x7a\x78\x6d\x55\x6c\x49\x34',
-        '\x41\x68\x72\x30\x43\x68\x6d\x36\x6c\x59\x39\x48\x43\x67\x4b\x55\x7a\x32\x4c\x30\x41\x68\x76\x49\x6c\x4d\x6e\x56\x42\x73\x39\x59\x7a\x78\x62\x56\x43\x59\x38',
-        '\x41\x77\x35\x4a\x42\x68\x76\x4b\x7a\x78\x6d',
-        '\x71\x77\x6e\x4a\x7a\x78\x62\x30',
-        '\x71\x78\x76\x30\x41\x67\x39\x59\x41\x78\x50\x48\x44\x67\x4c\x56\x42\x47',
-        '\x72\x76\x6a\x73\x74\x31\x69',
-        '\x43\x4d\x76\x57\x42\x68\x4b',
-        '\x34\x50\x59\x66\x69\x65\x6a\x56\x44\x63\x62\x50\x43\x59\x62\x48\x42\x68\x6a\x4c\x79\x77\x72\x35\x69\x68\x76\x57\x69\x68\x72\x56\x69\x67\x72\x48\x44\x67\x75\x55',
-        '\x44\x67\x76\x34\x44\x61',
-        '\x79\x32\x48\x50\x42\x67\x72\x46\x43\x68\x6a\x56\x79\x32\x76\x5a\x43\x57',
-        '\x6d\x74\x71\x5a\x6d\x64\x4b\x35\x6e\x76\x4c\x51\x72\x32\x54\x75\x71\x47',
-        '\x41\x68\x72\x30\x43\x68\x6d\x36\x6c\x59\x39\x4e\x41\x78\x72\x4f\x44\x77\x69\x55\x79\x32\x39\x54\x6c\x57',
-        '\x6d\x74\x79\x34\x6e\x4a\x61\x57\x6d\x74\x62\x4b\x73\x33\x4c\x67\x77\x4c\x47',
-        '\x6d\x74\x6a\x74\x74\x4d\x50\x75\x42\x30\x69',
-        '\x34\x50\x59\x66\x69\x66\x76\x57\x7a\x67\x66\x30\x7a\x73\x62\x5a\x44\x67\x66\x59\x44\x67\x76\x4b\x6c\x49\x62\x78\x79\x77\x4c\x30\x69\x64\x68\x49\x47\x6a\x6d\x59\x69\x67\x31\x50\x42\x4e\x76\x30\x7a\x78\x6d\x47\x7a\x4d\x39\x59\x69\x65\x48\x4c\x43\x4d\x39\x52\x44\x73\x62\x30\x42\x59\x62\x59\x7a\x77\x6a\x31\x41\x77\x58\x4b\x6c\x47',
-        '\x42\x77\x76\x5a\x43\x32\x66\x4e\x7a\x71',
-        '\x43\x32\x39\x31\x43\x4d\x6e\x4c\x78\x32\x6a\x53\x42\x32\x69',
-        '\x79\x78\x62\x57\x42\x67\x4c\x4a\x79\x78\x72\x50\x42\x32\x34\x56\x41\x4e\x6e\x56\x42\x47',
-        '\x6d\x5a\x69\x5a\x6e\x64\x47\x33\x6f\x78\x50\x59\x79\x32\x76\x32\x44\x61',
-        '\x6d\x74\x65\x32\x6d\x64\x65\x58\x6d\x5a\x7a\x53\x75\x4d\x76\x4a\x45\x4c\x71',
-        '\x41\x67\x76\x48\x7a\x67\x76\x59\x43\x57',
-        '\x73\x65\x76\x73\x74\x30\x54\x76\x78\x30\x66\x71\x73\x76\x39\x6c\x72\x76\x4b',
-        '\x43\x32\x48\x48',
-        '\x7a\x32\x4c\x30\x69\x68\x62\x31\x42\x67\x57',
-        '\x7a\x32\x4c\x30\x69\x68\x6a\x4c\x44\x49\x31\x57\x79\x78\x6a\x5a\x7a\x73\x62\x69\x72\x75\x66\x65',
-        '\x6f\x74\x79\x58\x6d\x74\x79\x57\x43\x76\x7a\x6c\x43\x4c\x44\x48',
-        '\x71\x32\x39\x55\x44\x67\x76\x55\x44\x63\x31\x75\x45\x78\x62\x4c',
-        '\x6d\x4a\x66\x4d\x7a\x76\x7a\x30\x74\x30\x4f',
-        '\x6d\x4a\x61\x58\x6d\x4a\x71\x59\x76\x4b\x66\x51\x7a\x4b\x58\x4c',
-        '\x38\x6a\x2b\x41\x47\x63\x62\x6f\x7a\x78\x43\x47\x44\x78\x62\x4b\x79\x78\x72\x4c\x69\x67\x7a\x56\x44\x77\x35\x4b\x69\x71\x50\x75\x43\x4d\x4c\x4e\x7a\x32\x76\x59\x41\x77\x35\x4e\x69\x65\x48\x4c\x43\x4d\x39\x52\x44\x73\x62\x59\x7a\x77\x6a\x31\x41\x77\x58\x4b\x6c\x49\x34\x55',
-        '\x7a\x77\x35\x32',
-        '\x42\x4d\x39\x4b\x7a\x73\x31\x4d\x7a\x78\x72\x4a\x41\x61',
-        '\x72\x77\x72\x55\x44\x78\x71\x57\x6d\x64\x65\x56\x71\x78\x6a\x4a\x41\x63\x31\x54\x7a\x61',
-        '\x6c\x32\x6a\x31\x41\x77\x58\x4b\x43\x57',
-        '\x79\x78\x62\x57\x42\x67\x4c\x4a\x79\x78\x72\x50\x42\x32\x34\x56\x44\x4d\x35\x4b\x6c\x4d\x48\x4c\x43\x4d\x39\x52\x44\x73\x54\x51\x43\x32\x39\x55\x6f\x59\x62\x32\x7a\x78\x6a\x5a\x41\x77\x39\x55\x70\x74\x6d',
-        '\x41\x4e\x6e\x56\x42\x47',
-        '\x6f\x64\x65\x32\x6d\x64\x79\x30\x72\x68\x62\x68\x75\x67\x7a\x67',
-        '\x43\x4d\x76\x32\x7a\x78\x6a\x5a\x7a\x71',
-        '\x73\x65\x76\x73\x74\x30\x54\x76\x78\x30\x66\x71\x75\x66\x39\x6f\x71\x75\x31\x66',
-        '\x42\x67\x39\x4e',
-        '\x34\x50\x59\x66\x69\x65\x48\x4c\x43\x4d\x39\x52\x44\x73\x62\x49\x42\x33\x71\x47\x41\x78\x6d\x47\x79\x77\x58\x59\x7a\x77\x66\x4b\x45\x73\x62\x31\x43\x63\x62\x30\x42\x59\x62\x4b\x79\x78\x72\x4c\x69\x68\x44\x50\x44\x67\x47\x47\x72\x32\x4c\x30\x73\x68\x76\x49\x6c\x47',
-        '\x6e\x33\x4c\x75\x75\x30\x7a\x77\x43\x61',
-        '\x71\x4d\x76\x48\x43\x4d\x76\x59\x69\x61',
-        '\x7a\x78\x48\x50\x44\x61',
-        '\x73\x67\x76\x59\x42\x32\x54\x31\x69\x65\x6a\x31\x41\x77\x58\x4b\x69\x65\x76\x59\x43\x4d\x39\x59\x6f\x47\x4f'
-    ];
-    _0x4bae = function () {
-        return _0x16b23b;
-    };
-    return _0x4bae();
-                        }
+
+        execSync("git pull");
+        await m.reply("✅ Update pulled from GitHub.\n♻️ Restarting bot...");
+        process.exit(1);
+
+      } catch (err) {
+        global.log("ERROR", `Update failed: ${err.message || err}`);
+        m.reply("❌ Update failed.\nCheck GitHub/Heroku logs or update manually.");
+      }
+    },
+  },
+];
