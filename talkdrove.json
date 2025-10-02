@@ -1,10 +1,10 @@
 {
     "bot-name": "Arch-Md",
-    "description": "A Multi Functional WhatsApp Bot Made By @GoodnessObilom",
+    "description": "A Multi Functional WhatsApp Bot Made By ARNOLD CHIRCHIR",
     "logo": "https://files.catbox.moe/ab9nv3.jpeg",
     "keywords": ["bot"],
     "documentation-link": "ch-md-site.vercel.app",
-    "owner-verification": "goodnessobilom@gmail.com",
+    "owner-verification": "arnoldkipruto193@gmail.com",
   
     "env": {
       "SESSION_ID": {
