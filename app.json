@@ -28,12 +28,12 @@
     },
     "OWNER_NAME": {
       "description": "put your bot owner name here",
-      "value": "GoodnessTech",
+      "value": "ARNOLD CHIRCHIR",
       "required": false
     },
     "TIME_ZONE": {
       "description": "set your desired timezone continuent follow by your city mistake might cause error in console or crash the bot",
-      "value": "Africa/Lagos",
+      "value": "Africa/Kenya",
       "required": false
     },
     "MENU_TYPE": {
@@ -43,17 +43,17 @@
     },
     "BOT_NAME": {
       "description": "set your desired bot name.",
-      "value": "",
+      "value": "ARNOLD CHIRCHIR",
       "required": false
     },
     "OWNER_NUMBER": {
       "description": "The phone numbers of the users who you want to be admin for the bot (should be in international format without + \",\").",
-      "value": "2349126793637",
+      "value": "254703110780",
       "required": false
     },
     "SUDO": {
       "description": "The phone numbers of the users who you want to be sub admin for the bot for multiple number , as split (should be in international format without + \",\").",
-      "value": "2349126793637",
+      "value": "254703110780",
       "required": false
     },
     "PACK_NAME": {
@@ -68,7 +68,7 @@
     },
       "MODE": {
       "description": "Use this to set your bot mode to either public or private when in public everyone has access when it private only bot owner and sudo have access",
-      "value": "private",
+      "value": "public",
       "required": true
     },
       "CALL": {
